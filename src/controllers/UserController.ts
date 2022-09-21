@@ -8,6 +8,8 @@ class UserController {
   async create(request: Request, response: Response) {
     const { firstName, lastName, email, age } = request.body;
 
+    console.log(firstName, lastName, email, age);
+
     const schema = yup.object().shape({
       firstName: yup.string().required(),
       lastName: yup.string().required(),
@@ -18,7 +20,9 @@ class UserController {
     try {
       await schema.validate(request.body, { abortEarly: false });
     } catch (err) {
-      throw new AppError(err);
+      response.json({
+        message: console.log(`error : ${err}`)
+      })
     }
 
     const usersRepository = getCustomRepository(UsersRepository);
@@ -44,6 +48,8 @@ class UserController {
     await usersRepository.save(user);
 
     return response.status(201).json(user);
+  }catch (err) {
+    throw new AppError(err);
   }
 }
 
