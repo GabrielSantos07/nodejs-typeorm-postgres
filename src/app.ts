@@ -2,16 +2,22 @@ import { AppDataSource } from "./database/data-source";
 import { User } from "./entity/User";
 import { router } from "./routes";
 import { AppError } from "./errors/AppError";
-import * as express from 'express';
+import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 
-
-AppDataSource.initialize();
 const app = express();
 
 app.use(express.json());
 app.use(router);
- 
+
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err)
+})
+
 app.use(
   (err: Error, request: Request, response: Response, _next: NextFunction) => {
     if (err instanceof AppError) {
