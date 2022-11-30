@@ -4,12 +4,12 @@ import { User } from "../entity/User"
 
 export const AppDataSource = new DataSource({
     migrationsTableName: 'migrations',
-    type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "teste123",
-    database: "test",
+    type: "mssql",
+    host: "Smthmg",
+    port: 1433,
+    username: "sa",
+    password: "Teste123",
+    database: "Waze",
     entities: [User],
     migrations: ["./src/database/migrations/**.ts"]
 })
